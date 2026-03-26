@@ -35,6 +35,10 @@ const connectDB = async () => {
 
 connectDB();
 
+app.use(cors({
+  origin: ['https://dashboard-metricas-front-jgavilan.vercel.app', 'http://localhost:5173']
+}));
+
 // Usar las rutas
 app.use('/api/metrics', metricRoutes);
 
