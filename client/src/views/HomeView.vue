@@ -15,7 +15,7 @@ const closeModal = () => isModalOpen.value = false;
 // Modificamos la función de guardar para que también cierre el modal
 const saveMetric = async () => {
   try {
-    await axios.post('http://localhost:5000/api/metrics', newMetric.value);
+    await axios.post('https://dashboard-metricas-jgavilan.vercel.app/api/metrics', newMetric.value);
     fetchMetrics();
     closeModal(); // <--- Cerramos el modal automáticamente
     // Resetear el formulario para la próxima vez
@@ -42,7 +42,7 @@ const averageReach = computed(() => {
 
 const fetchMetrics = async () => {
   try {
-    const response = await axios.get('http://localhost:5000/api/metrics');
+    const response = await axios.get('https://dashboard-metricas-jgavilan.vercel.app/api/metrics');
     metrics.value = response.data;
   } catch (error) {
     console.error("Error al traer datos:", error);
@@ -78,7 +78,7 @@ const newMetric = ref({
 
 const deleteMetric = async (id) => {
   if (confirm('¿Seguro que quieres borrar este registro?')) {
-    await axios.delete(`http://localhost:5000/api/metrics/${id}`);
+    await axios.delete(`https://dashboard-metricas-jgavilan.vercel.app/api/metrics/${id}`);
     fetchMetrics(); // Refresca los datos y el gráfico
   }
 };
