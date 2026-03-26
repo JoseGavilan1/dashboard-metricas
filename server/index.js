@@ -38,5 +38,9 @@ connectDB();
 // Usar las rutas
 app.use('/api/metrics', metricRoutes);
 
+app.get('/', (req, res) => {
+  res.send('🚀 API de Métricas funcionando en Producción');
+});
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Servidor en puerto ${PORT}`));
