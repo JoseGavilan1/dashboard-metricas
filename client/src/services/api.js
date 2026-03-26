@@ -5,6 +5,6 @@ const api = axios.create({
 });
 
 export const getMetrics = async () => {
-  const response = await axios.get('https://dashboard-metricas-bn7f.vercel.app/api/metrics');
+  const response = await axios.get('https://dashboard-metricas-jgavilan.vercel.app/api/metrics');
   return response.data;
 };
