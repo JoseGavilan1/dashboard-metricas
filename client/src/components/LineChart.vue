@@ -11,10 +11,8 @@ import {
   CategoryScale
 } from 'chart.js'
 
-// Registrar los módulos de Chart.js
 ChartJS.register(Title, Tooltip, Legend, LineElement, LinearScale, PointElement, CategoryScale)
 
-// Definir las "props" que recibirá el componente
 const props = defineProps({
   chartData: {
     type: Object,
@@ -22,7 +20,6 @@ const props = defineProps({
   }
 })
 
-// Opciones básicas del gráfico
 const chartOptions = {
   responsive: true,
   maintainAspectRatio: false

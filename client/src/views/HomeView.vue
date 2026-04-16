@@ -12,13 +12,12 @@ const isModalOpen = ref(false);
 const openModal = () => isModalOpen.value = true;
 const closeModal = () => isModalOpen.value = false;
 
-// Modificamos la función de guardar para que también cierre el modal
 const saveMetric = async () => {
   try {
     await axios.post('https://dashboard-metricas-jgavilan.vercel.app/api/metrics', newMetric.value);
     fetchMetrics();
-    closeModal(); // <--- Cerramos el modal automáticamente
-    // Resetear el formulario para la próxima vez
+    closeModal();
+
     newMetric.value = { platform: 'Instagram', followers: 0, reach: 0, date: new Date().toISOString().split('T')[0] };
   } catch (error) {
     console.error("Error al guardar:", error);
@@ -32,7 +31,6 @@ const totalFollowers = computed(() => {
   return latest.followers;
 });
 
-// Cálculo del promedio de alcance (Reach)
 const averageReach = computed(() => {
   const filtered = metrics.value.filter(m => m.platform === selectedPlatform.value);
   if (filtered.length === 0) return 0;
@@ -49,7 +47,6 @@ const fetchMetrics = async () => {
   }
 };
 
-// Gráfico dinámico según la plataforma seleccionada
 const chartData = computed(() => {
   const filteredData = metrics.value
     .filter(m => m.platform === selectedPlatform.value)
@@ -63,7 +60,7 @@ const chartData = computed(() => {
         backgroundColor: selectedPlatform.value === 'Instagram' ? '#E1306C' : '#000000',
         borderColor: selectedPlatform.value === 'Instagram' ? '#E1306C' : '#000000',
         data: filteredData.map(m => m.followers),
-        tension: 0.3 // Esto hace que la línea sea curva y se vea más "pro"
+        tension: 0.3
       }
     ]
   };
@@ -79,7 +76,7 @@ const newMetric = ref({
 const deleteMetric = async (id) => {
   if (confirm('¿Seguro que quieres borrar este registro?')) {
     await axios.delete(`https://dashboard-metricas-jgavilan.vercel.app/api/metrics/${id}`);
-    fetchMetrics(); // Refresca los datos y el gráfico
+    fetchMetrics();
   }
 };
 
@@ -169,7 +166,6 @@ onMounted(fetchMetrics);
 
 <style scoped>
 
-/* Contenedor de tarjetas */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -177,10 +173,9 @@ onMounted(fetchMetrics);
   margin-top: 30px;
 }
 
-/* Estilo de la tarjeta individual */
 .card {
   position: relative;
-  background: #1e1e1e; /* Color oscuro igual a tus KPIs */
+  background: #1e1e1e;
   padding: 20px;
   border-radius: 15px;
   border: 1px solid #333;
@@ -189,10 +184,9 @@ onMounted(fetchMetrics);
 
 .card:hover {
   transform: translateY(-5px);
-  border-color: #42b883; /* Resalta en verde al pasar el mouse */
+  border-color: #42b883;
 }
 
-/* El botón de eliminar */
 .delete-btn {
   position: absolute;
   top: 10px;
@@ -209,7 +203,6 @@ onMounted(fetchMetrics);
   color: #ff4d4d;
 }
 
-/* Badges para diferenciar plataformas */
 .badge {
   font-size: 0.7rem;
   padding: 3px 8px;
@@ -223,7 +216,6 @@ onMounted(fetchMetrics);
 .card-body p { margin: 5px 0; color: #ccc; }
 .card-footer { margin-top: 15px; border-top: 1px solid #333; pt: 10px; color: #666; }
 
-/* Botón Flotante (FAB) */
 .fab {
   position: fixed;
   bottom: 40px;
@@ -244,28 +236,25 @@ onMounted(fetchMetrics);
 }
 
 .fab:hover {
-  transform: scale(1.1) rotate(90deg); /* Se agranda y gira un poco al pasar el mouse */
+  transform: scale(1.1) rotate(90deg);
 }
 
-/* Overlay (Fondo oscuro) */
-/* Este es el fondo oscuro que cubre toda la pantalla */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.8); /* Más oscuro para que resalte el modal */
+  background: rgba(0, 0, 0, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9999; /* Un número alto para que esté por encima de todo */
-  backdrop-filter: blur(8px); /* Ese efecto de vidrio esmerilado */
+  z-index: 9999;
+  backdrop-filter: blur(8px);
 }
 
-/* Esta es la tarjeta blanca (o gris oscuro) central */
 .modal-content {
-  background: #252525; /* Un gris un poco más claro que el fondo del dashboard */
+  background: #252525;
   padding: 30px;
   border-radius: 20px;
   width: 90%;
@@ -274,27 +263,26 @@ onMounted(fetchMetrics);
   border: 1px solid #444;
 }
 
-/* Estilo para los grupos de inputs */
 .form-group {
   margin-bottom: 20px;
-  text-align: left; /* Para que las etiquetas se alineen bien */
+  text-align: left;
 }
 
 .form-group label {
   display: block;
   margin-bottom: 8px;
-  color: #42b883; /* Verde para que combine */
+  color: #42b883;
   font-weight: bold;
 }
 
 input, select {
-  width: 100%; /* Que ocupen todo el ancho del modal */
+  width: 100%;
   padding: 12px;
   background: #1a1a1a;
   border: 1px solid #333;
   color: white;
   border-radius: 10px;
-  box-sizing: border-box; /* Importante para que el padding no rompa el ancho */
+  box-sizing: border-box;
 }
 
 .modal-header {

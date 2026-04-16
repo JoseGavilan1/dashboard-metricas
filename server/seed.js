@@ -14,7 +14,7 @@ const seedData = [
 mongoose.connect(process.env.MONGO_URI, { family: 4 })
   .then(async () => {
     console.log('🌱 Sembrando datos...');
-    await Metric.deleteMany({}); // Limpia la base de datos antes
+    await Metric.deleteMany({}); 
     await Metric.insertMany(seedData);
     console.log('✅ ¡Datos de prueba insertados!');
     process.exit();

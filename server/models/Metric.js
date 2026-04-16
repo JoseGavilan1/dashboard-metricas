@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const MetricSchema = new mongoose.Schema({
-  platform: { type: String, required: true }, // Ej: 'Instagram', 'TikTok'
+  platform: { type: String, required: true }, 
   followers: { type: Number, required: true },
   posts: { type: Number, default: 0 },
   reach: { type: Number, default: 0 },
